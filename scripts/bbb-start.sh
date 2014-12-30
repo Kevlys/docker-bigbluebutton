@@ -17,7 +17,8 @@ echo -e "Checking BigBlueButton configuration...\n"
 bbb-conf --check
 
 echo -e "*******************************************"
-echo -e "Use this IP address to locally access your \nBigBlueButton container: \n\n$IP\n"
+echo -e "Use this IP address to locally access your \nBigBlueButton container: \n\n$IP)\n"
+echo -e "Internal IP address : \n\n`get_ip`\n"
 echo -e "*******************************************\n"
 
 #Ugly hack: Infinite loop to maintain the container running
