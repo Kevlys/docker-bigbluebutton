@@ -6,7 +6,7 @@ function get_ip (){
     /sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'
 }
 
-IP=`get_ip`
+IP=${IP:=`get_ip`}
 
 echo -e "Starting BigBlueButton services...\n"
 service redis-server-2.2.4 start
