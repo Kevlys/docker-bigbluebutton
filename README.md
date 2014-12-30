@@ -36,7 +36,7 @@ To be able to access bbb from `http://your-domain.com` address, you can define c
 ### Do not forget to update your `hosts` file if needed.
 Get the container IP
 
-    docker inspect -f "{{.NetworkSettings.^CAddress}}" bbb
+    docker inspect -f "{{.NetworkSettings.IPAddress}}" bbb
     
 Add this in /etc/hosts
 
