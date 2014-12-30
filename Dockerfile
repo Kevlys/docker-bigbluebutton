@@ -1,5 +1,5 @@
 FROM ubuntu:10.04
-MAINTAINER Juan Luis Baptiste juan.baptiste@gmail.com
+MAINTAINER Kévin Lysiak kevin.lysiak@gmail.com
 
 RUN apt-get -y update
 RUN apt-get install -y language-pack-en vim wget
