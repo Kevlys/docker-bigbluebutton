@@ -14,26 +14,37 @@ This image is based on Ubuntu 10.04 x86_64, which is the [officially supported O
 
 You can find a prebuilt docker image from [Docker Hub](https://registry.hub.docker.com/u/juanluisbaptiste/bigbluebutton/). To be able to use it, first it has to be pulled off from the Hub:
 
-    sudo docker pull juanluisbaptiste/bigbluebutton:latest
+    sudo docker pull kevlys/docker-bigbluebutton:latest
   
 And then you can run a container from it, see instructions below on how to do it.
 
 This is still an **alpha version** use it at your own risk. There is still some stuff about how to handle the different services that conform the BigBlueButton app inside the docker container that I need to improve.
 
-### Build Instructions
-After you clone this repository you need to build the image with the `docker` command like this:
-
-    cd docker-bigbluebutton
-    sudo docker build -t bbb_0.81 .
-
 ### How to launch the container
 This `docker` command will launch a new BigBlueButton container:
 
     sudo docker run -d --name bbb bbb_0.81
-
+    
 You can attach to the container while it starts and wait for it to finish, then take the IP address from the end of the output. To attach to the container run the following `docker` command:
 
     sudo docker attach --sig-proxy=false bbb
+
+To be able to access bbb from `http://your-domain.com` address, you can define custom `ip` or `domain` using `-e ID=<your-domain.com>`
+    
+     sudo docker run -d --name bbb -e IP=bbb.docker kevlys/docker-bigbluebutton
+    
+### Do not forget to update your `hosts` file if needed.
+Get the container IP
+
+    docker inspect -f "{{.NetworkSettings.^CAddress}}" bbb
+    
+Add this in /etc/hosts
+
+    172.17.0.xx bbb.docker # docker ip of bbb container
+    
+Later, I will document how to manage automaticaly container IP
+
+   
     
 ### How to access the container
 For now it's only possible to access the BigBlueButton container using the private IP address docker has assigned to it. after you attach to the container you will see an output like the following one telling you the IP address:
