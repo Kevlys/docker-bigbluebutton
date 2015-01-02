@@ -1,6 +1,22 @@
 
 This is a fork of https://github.com/juanluisbaptiste/docker-bigbluebutton
 
+# Install [docker nginx reverse proxy](see the doc : https://registry.hub.docker.com/u/jwilder/nginx-proxy/)
+
+    docker run --name nginx-proxy -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock jwilder/nginx-proxy
+
+# DNS
+
+### Do not forget to update your `hosts` file if needed.
+Get the container IP
+
+    docker inspect -f "{{.NetworkSettings.IPAddress}}" nginx-proxy
+    
+If you are installing bbb locally, Add this in /etc/hosts
+
+    172.17.0.xx bbb.docker # docker ip of nginx  container
+
+
 # docker-bigbluebutton
 
 Unofficial BigBlueButton 0.81 docker image. This repository contains the Dockerfile and all other files needed to build the docker image. 
@@ -23,42 +39,14 @@ This is still an **alpha version** use it at your own risk. There is still some 
 ### How to launch the container
 This `docker` command will launch a new BigBlueButton container:
 
-    sudo docker run -d --name bbb bbb_0.81
+    docker run -d --name bbb -e VIRTUAL_HOST=bbb.docker -e IP=bbb.docker kevlys/docker-bigbluebutton
     
 You can attach to the container while it starts and wait for it to finish, then take the IP address from the end of the output. To attach to the container run the following `docker` command:
 
     sudo docker attach --sig-proxy=false bbb
-
-To be able to access bbb from `http://your-domain.com` address, you can define custom `ip` or `domain` using `-e ID=<your-domain.com>`
-    
-     sudo docker run -d --name bbb -e IP=bbb.docker kevlys/docker-bigbluebutton
-    
-### Do not forget to update your `hosts` file if needed.
-Get the container IP
-
-    docker inspect -f "{{.NetworkSettings.IPAddress}}" bbb
-    
-Add this in /etc/hosts
-
-    172.17.0.xx bbb.docker # docker ip of bbb container
-    
-Later, I will document how to manage automaticaly container IP
-
-   
     
 ### How to access the container
-For now it's only possible to access the BigBlueButton container using the private IP address docker has assigned to it. after you attach to the container you will see an output like the following one telling you the IP address:
 
-    *******************************************
-    Use this IP address to locally access your 
-    BigBlueButton container: 
-    
-    172.17.0.2
-    
-    *******************************************
+    http://bbb.docker
 
-Access that address from your browser and you will get to the demo page. NOTE: If you try to use the exposed ports, the bundled nginx server will show the default page instead of BigBlueButton's demo page. I'm working on this.
-
-### TODO
-* Improve configuration so BigBlueButton can be accesed from the exposed ports.
-* Improve the way BigBlueButton services start using supervisord/systemd instead of using a custom script.
+Access that address from your browser and you will get to the demo page.
