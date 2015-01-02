@@ -1,7 +1,7 @@
 
 This is a fork of https://github.com/juanluisbaptiste/docker-bigbluebutton
 
-# Install [docker nginx reverse proxy](see the doc : https://registry.hub.docker.com/u/jwilder/nginx-proxy/)
+# Install [docker nginx reverse proxy](https://registry.hub.docker.com/u/jwilder/nginx-proxy/)
 
     docker run --name nginx-proxy -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock jwilder/nginx-proxy
 
